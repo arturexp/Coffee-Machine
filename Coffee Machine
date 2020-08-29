@@ -1,0 +1,44 @@
+START = "Starting to make a coffee"
+GRIND = "Grinding coffee beans"
+BOIL = "Boiling water"
+MIX = "Mixing boiled water with crushed coffee beans"
+COFFEE_CUP = "Pouring coffee into the cup"
+MILK_CUP = "Pouring some milk into the cup"
+COFFEE_READY = "Coffee is ready!"
+
+water_input = int(input("Write how many ml of water the coffee machine has:\n"))
+milk_input = int(input("Write how many ml of milk the coffee machine has:\n"))
+coffee_beans_input = int(input("Write how many grams of coffee beans the coffee machine has:\n"))
+number_of_cups = int(input("Write how many cups of coffee you will need:\n"))
+
+water = 200
+milk = 50
+coffee_beans = 15
+amount_from_input = []
+
+cups_from_water = water_input // water
+cups_from_milk = milk_input // milk
+cups_from_coffee_beans = coffee_beans_input // coffee_beans
+# print(f"w {cups_from_water} m {cups_from_milk} cb {cups_from_coffee_beans}")
+amount_from_input.append(cups_from_water)
+amount_from_input.append(cups_from_milk)
+amount_from_input.append(cups_from_coffee_beans)
+# print(amount_from_input)
+max_cups = min(amount_from_input)
+diff_can_need = max_cups - number_of_cups
+# print(f"max {max_cups} diff {diff_can_need}")
+
+if number_of_cups == max_cups:
+    print("Yes, I can make that amount of coffee")
+elif number_of_cups < max_cups:
+    print(f"Yes, I can make that amount of coffee (and even {diff_can_need} more than that)")
+else:
+    print(f"No, I can make only {max_cups} cup(s) of coffee")
+
+# print(f"For {number_of_cups} cups of coffee you will need:")
+# print(f"{water *number_of_cups } ml of water")
+# print(f"{milk * number_of_cups} ml of milk")
+# print(f"{coffee_beans * number_of_cups} g of coffee beans")
+
+
+#  print(f"""{START}\n{GRIND}\n{BOIL}\n{MIX}\n{COFFEE_CUP}\n{MILK_CUP}\n{COFFEE_READY}""")
