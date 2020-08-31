@@ -6,10 +6,11 @@ COFFEE_CUP = "Pouring coffee into the cup"
 MILK_CUP = "Pouring some milk into the cup"
 COFFEE_READY = "Coffee is ready!"
 
-# water_input = int(input("Write how many ml of water the coffee machine has:\n"))
-# milk_input = int(input("Write how many ml of milk the coffee machine has:\n"))
-# coffee_beans_input = int(input("Write how many grams of coffee beans the coffee machine has:\n"))
-# number_of_cups = int(input("Write how many cups of coffee you will need:\n"))
+NB_WATER = "Sorry, not enough water!"
+NB_MILK = "Sorry, not enough milk!"
+NB_CB = "Sorry, not enough coffee beans!"
+NB_CUPS = "Sorry, not enough cups!"
+RES_OK = "I have enough resources, making you a coffee!"
 
 water = 400
 milk = 540
@@ -17,6 +18,8 @@ coffee_beans = 120
 money = 550
 cups = 9
 amount_from_input = []
+stop_signal = True
+isBack = False
 
 
 def fill():
@@ -36,30 +39,58 @@ def take():
 def make_espresso():
     """For one espresso, the coffee machine needs 250 ml of water and 16 g of coffee beans. It costs $4."""
     global water, coffee_beans, cups, money
-    water -= 250
-    coffee_beans -= 16
-    cups -= 1
-    money += 4
+    if water - 250 < 0:
+        print(NB_WATER)
+    elif coffee_beans - 16 < 0:
+        print(NB_CB)
+    elif cups - 1 < 0:
+        print(NB_CUPS)
+    else:
+        print(RES_OK)
+        water -= 250
+        coffee_beans -= 16
+        cups -= 1
+        money += 4
 
 
 def make_latte():
     """For a latte, the coffee machine needs 350 ml of water, 75 ml of milk, and 20 g of coffee beans. It costs $7."""
     global water, milk, coffee_beans, cups, money
-    water -= 350
-    coffee_beans -= 20
-    cups -= 1
-    money += 7
-    milk -= 75
+    if water - 350 < 0:
+        print(NB_WATER)
+    elif coffee_beans - 20 < 0:
+        print(NB_CB)
+    elif cups - 1 < 0:
+        print(NB_CUPS)
+    elif milk - 75 < 0:
+        print(NB_MILK)
+    else:
+        print(RES_OK)
+        water -= 350
+        coffee_beans -= 20
+        cups -= 1
+        money += 7
+        milk -= 75
 
 
 def make_cappuccino():
     """For a cappuccino, the coffee machine needs 200 ml of water, 100 ml of milk, and 12 g of coffee. It costs $6."""
     global water, milk, coffee_beans, cups, money
-    water -= 200
-    coffee_beans -= 12
-    cups -= 1
-    money += 6
-    milk -= 100
+    if water - 200 < 0:
+        print(NB_WATER)
+    elif coffee_beans - 12 < 0:
+        print(NB_CB)
+    elif cups - 1 < 0:
+        print(NB_CUPS)
+    elif milk - 100 < 0:
+        print(NB_MILK)
+    else:
+        print(RES_OK)
+        water -= 200
+        coffee_beans -= 12
+        cups -= 1
+        money += 6
+        milk -= 100
 
 
 def cm_state():
@@ -72,16 +103,37 @@ def cm_state():
 
 
 def buy():
-    global water, milk, coffee_beans, cups, money
-    coffee_type = int(input("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino:\n"))
-    if coffee_type == 1:
+    global water, milk, coffee_beans, cups, money, isBack
+    coffee_type = input("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino:\n")
+    if coffee_type == "1":
         make_espresso()
-    elif coffee_type == 2:
+        isBack = False
+    elif coffee_type == "2":
         make_latte()
-    elif coffee_type == 3:
+        isBack = False
+    elif coffee_type == "3":
         make_cappuccino()
+        isBack = False
+    elif coffee_type == "back":
+        isBack = True
 
- 
+
+while stop_signal:
+    action = input("Write action (buy, fill, take, remaining, exit):\n")
+    if action == "buy":
+        if isBack:
+            continue
+        else:
+            buy()
+    elif action == "fill":
+        fill()
+    elif action == "take":
+        take()
+    elif action == "remaining":
+        cm_state()
+    elif action == "exit":
+        stop_signal = False
+
 # cups_from_water = water_input // water
 # cups_from_milk = milk_input // milk
 # cups_from_coffee_beans = coffee_beans_input // coffee_beans
@@ -94,16 +146,6 @@ def buy():
 # max_cups = min(amount_from_input)
 # diff_can_need = max_cups - number_of_cups
 # print(f"max {max_cups} diff {diff_can_need}")
-
-cm_state()
-action = input("Write action (buy, fill, take):\n")
-if action == "buy":
-    buy()
-elif action == "fill":
-    fill()
-elif action == "take":
-    take()
-cm_state()
 
 
 # if number_of_cups == max_cups:
