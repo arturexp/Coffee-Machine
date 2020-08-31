@@ -107,24 +107,18 @@ def buy():
     coffee_type = input("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino:\n")
     if coffee_type == "1":
         make_espresso()
-        isBack = False
     elif coffee_type == "2":
         make_latte()
-        isBack = False
     elif coffee_type == "3":
         make_cappuccino()
-        isBack = False
     elif coffee_type == "back":
-        isBack = True
+        pass
 
 
 while stop_signal:
     action = input("Write action (buy, fill, take, remaining, exit):\n")
     if action == "buy":
-        if isBack:
-            continue
-        else:
-            buy()
+        buy()
     elif action == "fill":
         fill()
     elif action == "take":
